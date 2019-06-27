@@ -224,7 +224,7 @@
                     $('#voteBtn').attr('href', data.data.website.url)
                     $('#redirectModal').modal({backdrop: 'static', keyboard: false})
                 } else {
-                    startTimerCheckVote()
+                    // chrome shit 
                 }
             } else {
                 $('#website-error').html('<div class="alert alert-danger"><b><?= $Lang->get('GLOBAL__ERROR') ?>:</b> ' + data.error + '</div>')
