@@ -32,7 +32,7 @@
 		"Voter": "/vote"
 	},
 	"author":"Eywek (edit Snkh)",
-	"version":"3.0.0",
+	"version":"3.0.1",
 	"useEvents":true,
 	"permissions" : {
 		"available" : ["VOTE__ADMIN_MANAGE_REWARDS", "VOTE__ADMIN_MANAGE_WEBSITES", "VOTE__ADMIN_MANAGE", "VOTE__COLLECT_REWARD", "VOTE__ADMIN_VIEW_TOP"],
