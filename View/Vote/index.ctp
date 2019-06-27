@@ -1,24 +1,24 @@
+<br><br>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-
             <div class="row form-group">
                 <div class="col-xs-12">
-                    <ul class="nav nav-pills nav-justified thumbnail setup-panel">
-                        <li class="active">
-                            <a href="#step-1">
+                    <ul style="background-color:white;" class="nav nav-pills nav-justified thumbnail setup-panel" id="vote-head">
+                        <li  class=" active">
+                            <a href="#step-1" id="step-11">
                                 <h4 class="list-group-item-heading"><?= $Lang->get('VOTE__STEP_TITLE') ?> 1</h4>
                                 <p class="list-group-item-text"><?= $Lang->get('VOTE__STEP_SET_USER') ?></p>
                             </a>
                         </li>
                         <li class="disabled">
-                            <a href="#step-2">
+                            <a href="#step-2" id="step-22">
                                 <h4 class="list-group-item-heading"><?= $Lang->get('VOTE__STEP_TITLE') ?> 2</h4>
                                 <p class="list-group-item-text"><?= $Lang->get('VOTE__STEP_SET_WEBSITE') ?></p>
                             </a>
                         </li>
                         <li class="disabled">
-                            <a href="#step-3">
+                            <a href="#step-3" id="step-33">
                                 <h4 class="list-group-item-heading"><?= $Lang->get('VOTE__STEP_TITLE') ?> 3</h4>
                                 <p class="list-group-item-text"><?= $Lang->get('VOTE__STEP_GET_REWARDS') ?></p>
                             </a>
@@ -28,17 +28,16 @@
             </div>
             <div class="row step active" id="step-1">
                 <div class="col-xs-12">
-                    <div class="col-md-12 well setup-content text-center">
+                    <div class="col-md-12 well setup-content text-center" style="border:0;">
 
-                        <h3>Entrez votre pseudo</h3>
+                        <h3 class="black">Entrez votre pseudo</h3>
                         <form data-ajax="true" action="<?= $this->Html->url(['action' => 'setUser']) ?>" method="post" data-callback-function="afterSetUser">
                             <div style="width: 350px;display: inline-block;">
                                 <div class="ajax-msg"></div>
-                                <input type="text" class="form-control" name="username" placeholder="Eywek" <?= ($user) ? 'value="' . $user['pseudo'] . '" disabled' : '' ?>>
+                                <input type="text" class="form-control" name="username" placeholder="Tronai" <?= ($user) ? 'value="' . $user['pseudo'] . '" disabled' : '' ?>>
                             </div>
                             <br><br>
-                            <button class="btn btn-success" type="submit">Passer a l'étape suivante</button>
-                            <a class="btn btn-success" id="display-rewards" data-toggle="modal" data-target="#rewards"><?= $Lang->get('VOTE__DISPLAY_REWARDS'); ?></a>
+                            <button class="btn btn-vote" type="submit">Passer a l'étape suivante</button>
                         </form>
 
                     </div>
@@ -46,7 +45,7 @@
             </div>
             <div class="row step" id="step-2">
                 <div class="col-xs-12">
-                    <div class="col-md-12 well setup-content">
+                    <div class="col-md-12 well setup-content" style="border:0;">
                         <div class="loader">
                             <p>
                                 <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
@@ -62,19 +61,40 @@
                                     echo '</div><div class="row">';
                                 $i++;
                                 echo '<div class="col-md-4">';
-                                    echo '<div class="panel panel-default">';
-                                        echo '<div class="panel-heading text-center">';
+                                    echo '<div class="panel panel-default" style="border:0;">';
+                                        echo '<div class="panel-heading text-center" style="border:0;">';
                                             echo '<h3 class="panel-title">' . $serverName . '</h3>';
                                         echo '</div>';
                                         echo '<div class="panel-body">';
                                             foreach ($websites as $website) {
-                                                echo '<a data-website-id="' . $website['Website']['id'] . '" href="' . $website['Website']['url'] . '" target="_blank" class="btn btn-block btn-success website">' . $website['Website']['name'] . '</a>';
+                                                echo '<a data-website-id="' . $website['Website']['id'] . '" href="' . $website['Website']['url'] . '" target="_blank" class="btn btn-block btn-vote website">' . $website['Website']['name'] . '</a>';
                                             }
                                         echo '</div>';
                                     echo '</div>';
                                 echo '</div>';
                             }
                             ?>
+
+                            <div class="col-md-8">
+                                <div class="panel panel-default" style="border:0;">
+                                    <div class="panel-heading text-center" style="border:0;">
+                                        <h3 class="panel-title">OUT</h3>
+                                        <div class="panel-body">
+                                        <form data-ajax="true" action="<?= $this->Html->url(['action' => 'checkOut']) ?>" method="post" data-callback-function="afterCheckOut">
+                                            <div style="">
+                                                <div class="ajax-msg"></div>
+                                                <input type="text" class="form-control" name="out" placeholder="">
+                                            </div>
+                                            <br><br>
+                                            <button class="btn btn-vote" type="submit"><?= $Lang->get('VOTE__CHECK_OUT') ?></button>
+                                        </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
                         </div>
 
                     </div>
@@ -82,13 +102,13 @@
             </div>
             <div class="row step" id="step-3">
                 <div class="col-xs-12">
-                    <div class="col-md-12 well setup-content">
+                    <div class="col-md-12 well setup-content" style="border:0;">
 
                         <div class="row">
                             <div class="col-md-4 col-md-offset-4">
                                 <div id="reward-msg"></div>
-                                <button class="btn btn-success btn-block get-reward" data-reward="now"><?= $Lang->get('VOTE__GET_REWARD_NOW') ?></button>
-                                <button class="btn btn-success btn-block get-reward" data-reward="later"><?= $Lang->get('VOTE__GET_REWARD_LATER') ?></button>
+                                <button class="btn btn-success btn-vote get-reward" data-reward="now"><?= $Lang->get('VOTE__GET_REWARD_NOW') ?></button>
+                                <button class="btn btn-success btn-vote get-reward" data-reward="later"><?= $Lang->get('VOTE__GET_REWARD_LATER') ?></button>
                             </div>
                         </div>
 
@@ -97,18 +117,17 @@
             </div>
 
         </div>
-
         <div class="col-md-12">
 
             <hr>
 
-            <div class="well">
+            <div class="well" style="border:0;">
 
-                <h2 class="text-center">
+                <h3 class="text-center black uppercase">
                     <i class="fa fa-table"></i>
                     Classement
-                </h2>
-                
+                </h3>
+                <br>
                 <div class="table-responsive">
                     <table class="table text-muted">
                         <tbody>
@@ -140,6 +159,7 @@
     </div>
 </div>
 <style>
+
     ul.nav {
         padding-bottom: 5px;
         padding-top: 5px;
@@ -171,11 +191,19 @@
         left: 47.8%;
         color: #fff;
     }
+
 </style>
 <script type="text/javascript">
     function afterSetUser(req, res)
     {
         next(2)
+    }
+
+    function afterCheckOut(req, res)
+    {
+        if(res.statut == true) {
+            setTimeout(checkVote, 2000);
+        } 
     }
 
     function next(step)
@@ -189,7 +217,7 @@
     $('.website').on('click', function (e) {
         e.preventDefault()
         website = $(this)
-        $('.loader').css('display', 'block')
+
         $.post('<?= $this->Html->url(['action' => 'setWebsite']) ?>', {'data[_Token][key]': '<?= $csrfToken ?>', 'website_id': $(this).attr('data-website-id')}, function (data) {
             if (data.status) {
                 if (!window.open(data.data.website.url, '_blank')) {
@@ -206,14 +234,7 @@
             $('#website-error').html('<div class="alert alert-danger"><b><?= $Lang->get('GLOBAL__ERROR') ?>:</b> <?= $Lang->get('VOTE__ERROR_WEBSITE') ?></div>')
             $('.loader').css('display', 'none')
         })
-    });
-
-    $('#display-rewards').on('click', function () {
-        $('#rewards').show();
-    });
-    $('#rewards').on('click', '.close', function () {
-        $('#rewards').hide();
-    });
+    })
 
     function startTimerCheckVote()
     {
@@ -253,6 +274,7 @@
         })
     })
 </script>
+
 <div class="modal fade" id="redirectModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -262,44 +284,15 @@
             </div>
             <div class="modal-body text-center">
                 <div class="alert alert-info"><?= $Lang->get('VOTE__MODAL_DESC') ?></div>
-                <a href="#" id="voteBtn" target="_blank" onclick="$('#redirectModal').modal('hide');startTimerCheckVote()" class="btn btn-info btn-block"><?= $Lang->get('VOTE__MODAL_BTN') ?></a>
+                <a href="#" id="voteBtn" target="_blank" onclick="$('#redirectModal').modal('hide');" class="btn btn-info btn-block"><?= $Lang->get('VOTE__MODAL_BTN') ?></a>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="rewards" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"><?= $Lang->get('VOTE__REWARDS') ?></h4>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table text-muted">
-                        <thead>
-                            <tr>
-                                <th>Récompense</th>
-                                <th>Probabilité d'obtention</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $i = 0;
-                            foreach ($rewards as $reward) {
-                            ?>
-                                <tr>
-                                    <td><?= $reward['Reward']['name']; ?></td>
-                                    <td><?= $reward['Reward']['probability']; ?>%</td>
-                                </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<style media="screen">
+#vote-head .active #step-11, #vote-head .active #step-33, #vote-head .active #step-22{
+  background-color: #FFC902!important;
+  color:white!important;
+}
+</style>

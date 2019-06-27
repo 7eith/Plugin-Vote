@@ -77,5 +77,12 @@
   "VOTE__ADMIN_STATS_TOP": "Statistiques",
   "VOTE__ADMIN_VOTE_NUMBER_GRAPH_TOP": "Comparaison du nombre de votes",
   "VOTE__ADMIN_VOTE_MEMBER_NUMBER_GRAPH_TOP": "Comparaison du nombre de voteurs",
-  "VOTE__ADMIN_DEL_VOTE": "Effacer visuellement les votes du mois"
+  "VOTE__ADMIN_DEL_VOTE": "Effacer visuellement les votes du mois",
+
+  "VOTE__ERROR_OUT_EMPTY": "Le nombre d'OUT est vide.",
+  "VOTE__ERROR_OUT_NOT_NUMBER": "Le nombre d'OUT n'est pas un nombre.",
+  "VOTE__RPG__API_ERROR": "Probleme d'API RPG Paradize.",
+  "VOTE__CHECK_OUT_SUCCESS": "Nombre d'OUT correcte, redirection en cours",
+  "VOTE__ERROR_OUT_INVALID": "Le nombre d'OUT n'est pas celui sur la page de vote.",
+  "VOTE__CHECK_OUT": "Voter"
 }

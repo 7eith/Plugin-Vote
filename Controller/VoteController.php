@@ -291,4 +291,76 @@ class VoteController extends VoteAppController {
             'can_vote' => $this->Vote->canInAll(['username' => $username], '0.0.0.0', $this->Website->find('all'))
         ]);
     }
+
+    /** ----------------------
+     *      Snkh Inc.
+     ---------------------- */
+
+    public function checkOut()
+    {
+        if (!$this->request->is('ajax'))
+            throw new NotFoundException();
+
+        $this->autoRender = false;
+        $this->response->type('json');
+
+        // has params out
+        if (empty($this->request->data['out']))
+            return $this->sendJSON(['statut' => false, 'msg' => $this->Lang->get('VOTE__ERROR_OUT_EMPTY')]);
+
+        $out = $this->request->data['out'];
+
+        // is numeric
+        if(!is_numeric($out)) 
+            return $this->response->body(json_encode(array('statut' => false, 'msg' => $this->Lang->get('VOTE__ERROR_OUT_NOT_NUMBER'))));
+
+        // error :( 
+        if($this->getCurrentOut() == -1) {
+            return $this->response->body(json_encode(array('statut' => true, 'msg' => $this->Lang->get('VOTE__RPG__API_ERROR'))));
+        }
+
+        if($out == $this->getCurrentOut()) {
+            return $this->response->body(json_encode(array('statut' => true, 'msg' => $this->Lang->get('VOTE__CHECK_OUT_SUCCESS'))));
+        } else {
+            return $this->response->body(json_encode(array('statut' => false, 'msg' => $this->Lang->get('VOTE__ERROR_OUT_INVALID'))));
+        }
+    }
+
+
+    private function getCurrentOut()
+    {
+        $url = "http://rpg-paradize.com/site-Qataria++Serveur+PvP-Faction-110512";
+        $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1'; // simule Firefox 4.
+        $header[0] = "Accept: text/xml,application/xml,application/xhtml+xml,";
+        $header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
+        $header[] = "Cache-Control: max-age=0";
+        $header[] = "Connection: keep-alive";
+        $header[] = "Keep-Alive: 300";
+        $header[] = "Accept-Charset: utf-8";
+        $header[] = "Accept-Language: fr"; // langue fr.
+        $header[] = "Pragma: "; // Simule un navigateur
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url); // l'url visité
+        curl_setopt($ch, CURLOPT_FAILONERROR, 1);// Gestion d'erreur
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); // stock la response dans une variable
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_PORT, 80); // set port 80
+        curl_setopt($ch, CURLOPT_TIMEOUT, 2); //  timeout curl à 15 secondes.
+        curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+
+        $result=curl_exec($ch);
+        $error = curl_errno($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if($result !== false) {
+            $str = substr($result, strpos($result, 'Clic Sortant'), 20);
+            $out = filter_var($str, FILTER_SANITIZE_NUMBER_INT);
+            $array = array($out, $out-1, $out-2, $out-3, $out+1, $out+2, $out+3);
+            return $out;
+        } else {
+            return -1;
+        }
+    }
 }
